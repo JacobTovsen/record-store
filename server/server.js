@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded( {extended: true} ) );
 app.use( '/record', recordRouter );
 
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 app.listen( port, () => console.log( `listening on port ${port}`));
 
 
