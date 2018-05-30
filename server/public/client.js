@@ -8,7 +8,7 @@ function onReady(){
         event.preventDefault();
         //prevent default prevents page refresh on pressing submit button
         
-        // addRecord( getNewRecord() );
+        addRecord( getNewRecord() );
     })
     getAllRecords();
 }
