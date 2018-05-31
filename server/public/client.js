@@ -55,11 +55,12 @@ function displayAllRecords(recordArray){
 }
 
 function makeRowFor(record){
+    console.log(record);
     let rowHtml = `<tr>
         <td>${record.artist}</td>
-        <td>${record.albumName}</td>
+        <td>${record.album}</td>
         <td>${record.year}</td>
-        <td>${record.genreList.join(', ')}</td>
+        <td>${record.genre}</td>
     </tr>`;
     return rowHtml;
 }
