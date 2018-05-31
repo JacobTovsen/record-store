@@ -7,21 +7,29 @@ const router = express.Router();
 const recordArray = [];
 
 router.get('/', ( req, res ) => {
-    console.log('Handling my GET for /record');
-    res.send(recordArray);
+    Record.find()
+        .then( ( data ) => {
+            //we got stuff back from the database (noerror)
+            console.log(`Got stuff back from mongo: ${data}`);
+            res.send(data);
+        }).catch( (error) => {
+            // got an error from database
+            console.log(`Error from mongo: ${error}`);
+            res.sendStatus(500); // status for bad stuf returned
+        });
 });
 
 router.post('/', (req, res) => {
-    console.log('Handling my POST for /record', req.body);
-    let sentRecord = req.body;
-    sentRecord.genre = [sentRecord.genre];
-    //I could make 100% sure the objects are exactly the same on the client
-    // and server, or I could just assume they may not be and set all the values
-    // again.  Nice if you aren't the one writing the code on both sides.
-    let record = new Record(sentRecord);
-    recordArray.push(record);
-    res.sendStatus(201);
-    // status 201 = 'created'
+    let recordData = req.body;
+    console.log('got the record data from request:', recordData );
+    let newRecord = new Record(recordData);
+    newRecord.save()
+    .then(() =>{
+        res.sendStatus(201);
+    }).catch((error) => {
+        console.log('error adding record:', error );
+        res.sendStatus(500);
+    })
 })
 
 module.exports = router;
