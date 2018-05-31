@@ -1,14 +1,14 @@
 const express = require('express');
-
+const Record = require('../modules/models/record.schema.js');
 //Have express make me a new Router
 const router = express.Router();
-const Record = require('../modules/record.class');
-const recordArray = [
-    new Record('Beatles', 'Abbey Road', 1969, ['rock', 'pop', 'yippie skippy']),
-    new Record('Michael Jackson', 'Off the Wall', 1979, ['Pop']),
-    new Record('Prince', 'Purple Rain', 1984, ['Pop']),
-    new Record('Cibo Matto', 'Via la Woman', 1990, ['Jpop'])
-];
+// const Record = require('../modules/record.class');
+// const recordArray = [
+//     new Record('Beatles', 'Abbey Road', 1969, ['rock', 'pop', 'yippie skippy']),
+//     new Record('Michael Jackson', 'Off the Wall', 1979, ['Pop']),
+//     new Record('Prince', 'Purple Rain', 1984, ['Pop']),
+//     new Record('Cibo Matto', 'Via la Woman', 1990, ['Jpop'])
+// ];
 
 router.get('/', ( req, res ) => {
     console.log('Handling my GET for /record');
