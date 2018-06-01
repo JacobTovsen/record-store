@@ -15,7 +15,7 @@ router.get('/', ( req, res ) => {
         }).catch( (error) => {
             // got an error from database
             console.log(`Error from mongo: ${error}`);
-            res.sendStatus(500); // status for bad stuf returned
+            res.sendStatus(500); // status for bad stuff returned
         });
 });
 
@@ -31,5 +31,4 @@ router.post('/', (req, res) => {
         res.sendStatus(500);
     })
 })
-
 module.exports = router;

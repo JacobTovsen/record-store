@@ -4,39 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <script src="vendor/angular.min.js"></script> -->
-    <script src="vendor/jquery-3.3.1.min.js"></script>
+    <script src="vendor/angular.min.js"></script>
     <script src="client.js"></script>
     <link rel="stylesheet" href="vendor/bootstrap.min.css">
     <title>Record Store</title>
 </head>
 <body>
-    <h1>Record Store</h1>
-    <section>
-        <h2>Add Record</h2>
-        <form>
-            <input type="text" id="in-artist" placeholder="artist"/>
-            <input type="text" id="in-album" placeholder="album"/>
-            <input type="number" id="in-year" placeholder="year"/>
-            <input type="text" id="in-genre" placeholder="genre"/>
-            <input type="submit" id="add-record" value="Add Record"/>
-        </form>
-    </section>
-    <section>
-        <h2>All Records</h2>
-        <table class="table table-striped">
-            <thead class="thead thead-dark">
-                <tr>
-                    <th>Artist</th>
-                    <th>Album</th>
-                    <th>Year</th>
-                    <th>Genres</th>
-                </tr>
-            </thead>
-            <tbody id="records">
-                <!-- Records added by JavaScript here -->
-            </tbody>
-        </table>
-    </section>
+    <div ng-app="myApp">
+        <div ng-controller="LaunchpadController as LC">
+            <h1>Record Store</h1>
+            <div>
+                <h2>Add Record</h2>
+                <form>
+                    <input type="text" ng-model="LC.inArtist" placeholder="artist"/>
+                    <input type="text" ng-model="LC.inAlbum" placeholder="album"/>
+                    <input type="number" ng-model="LC.inYear" placeholder="year"/>
+                    <input type="text" ng-model="LC.inGenre" placeholder="genre"/>
+                    <input type="submit" ng-click="LC.getNewRecord()" value="Add Record"/>
+                </form>
+            </div>
+            <div>
+                <h2>All Records</h2>
+                <table class="table table-striped">
+                    <thead class="thead thead-dark">
+                        <tr>
+                            <th>Artist</th>
+                            <th>Album</th>
+                            <th>Year</th>
+                            <th>Genres</th>
+                        </tr>
+                    </thead>
+                    <tbody id="records">
+                        <!-- Records added by JavaScript here -->
+                        <tr ng-repeat="record in LC.records">
+                            <td>{{record.artist}}</td>
+                            <td>{{record.album}}</td>
+                            <td>{{record.year}}</td>
+                            <td>{{record.genre}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,66 +1,49 @@
-console.log( 'js' );
+let myApp = angular.module( 'myApp', [] );
 
-$(document).ready( onReady );
+myApp.controller( 'LaunchpadController', ['$http', function($http){
+    // use "vm" as the name in script
+    let vm = this;
+    //use nickname in HTML
 
-function onReady(){
-    console.log( 'jq' );
-    $("#add-record").on('click', function(event){
-        event.preventDefault();
-        //prevent default prevents page refresh on pressing submit button
-        
-        addRecord( getNewRecord() );
-    })
-    getAllRecords();
-}
-
-function getNewRecord(){
-    let record = {
-        artist: $("#in-artist").val(),
-        album: $("#in-album").val(),
-        year: $("#in-year").val(),
-        genre: $("#in-genre").val(),
+    vm.getNewRecord = function (){
+        let record = {
+            artist: vm.inArtist,
+            album: vm.inAlbum,
+            year: vm.inYear,
+            genre: vm.inGenre
+        }
+        vm.addRecord(record);
     }
-    return record;
-}
 
-function addRecord(record){
-    $.ajax({
-        method: 'POST',
-        url: '/record',
-        data: record
-    }).then( function(response) {
-        //clear input fields
-        getAllRecords();
-    }).catch( function(response){
-        console.log('Something bad happened:', response.status );
-    });
-}
-
-function getAllRecords(){
-    $.ajax({
-        method: 'GET',
-        url: '/record'
-    }).then( function(response) {
-        displayAllRecords(response);
-    });
-}
-
-
-function displayAllRecords(recordArray){
-    let $recordsTarget = $('#records');
-    $recordsTarget.empty();
-    for(let record of recordArray){
-        $recordsTarget.append(makeRowFor(record));
+    vm.addRecord = function (record){
+        $http({
+            method: 'POST',
+            url: '/record',
+            data: record
+        }).then( function(response) {
+            //clear input fields
+            vm.getAllRecords();
+            vm.inArtist = '';
+            vm.inAlbum = '';
+            vm.inYear = '';
+            vm.inGenre = '';
+        }).catch( function(response){
+            console.log('Something bad happened in catch on POST:', response.status );
+        });
     }
-}
 
-function makeRowFor(record){
-    console.log(record);
-    let rowHtml = `<tr>
-        <td>${record.artist}</td>
-        <td>${record.album}</td>
-        <td>${record.year}</td>
-        <td>${record.genre}</td>
-    </tr>`;
-    return rowHtml;
-}
+    vm.getAllRecords = function (){
+        $http({
+            method: 'GET',
+            url: '/record'
+        }).then( function(response) {
+            console.log(`Got response from the server:`, response.data );
+            vm.records = response.data;
+            console.log( 'your records:', vm.records);
+            // vm.displayAllRecords(vm.records);
+        }).catch(function(error){
+            console.log(`Error getting records in GET: ${error}`);
+        });
+    }
+    vm.getAllRecords();
+}]);

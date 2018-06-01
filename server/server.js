@@ -20,6 +20,7 @@ mongoose.connection.on('error', (error) => {
 const app = express();
 app.use( express.static( 'server/public' ));
 app.use(bodyParser.urlencoded( {extended: true} ) );
+app.use( bodyParser.json() );
 app.use( '/record', recordRouter );
 
 
